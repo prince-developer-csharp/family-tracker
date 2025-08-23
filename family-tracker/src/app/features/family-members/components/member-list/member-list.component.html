@@ -1,0 +1,75 @@
+<div class="bg-gray-50">
+    <div class="container mx-auto px-4 py-16">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div class="text-center md:text-left mb-6 md:mb-0">
+                <h1 class="text-5xl font-bold text-gray-800">Our Family</h1>
+                <p class="text-gray-500 mt-4 text-lg">A little bit about the people who make our house a home.</p>
+            </div>
+            <button (click)="addMember()"
+                class="flex items-center bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-300">
+                <span class="material-icons mr-2">add</span>
+                Add Family Member
+            </button>
+        </div>
+
+        <div class="mb-12">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg p-8 text-white">
+                <div class="flex items-center justify-center sm:justify-start">
+                    <span class="material-icons text-5xl mr-4">payments</span>
+                    <div>
+                        <h2 class="text-2xl font-bold">Total Combined Salary</h2>
+                        <p class="text-4xl font-bold mt-1">{{ getTotalSalary() | currency }}</p>
+                    </div>
+                </div>
+                <p class="text-center sm:text-left mt-4 text-blue-100">This represents the total annual income of the
+                    working members of the family.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div *ngFor="let member of members"
+                class="bg-white rounded-xl shadow-lg p-8 transform hover:scale-105 transition-transform duration-300">
+
+                <!-- Profile -->
+                <div class="flex items-center mb-4">
+                    <img [src]="getImage(member.id)" [alt]="'Portrait of ' + member.name"
+                        class="w-24 h-24 rounded-full mr-6 border-4" [ngClass]="getColor(member.relation)" />
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">{{ member.name }}</h2>
+                        <p [ngClass]="getColor(member.relation).split(' ')[0] + ' font-semibold'">
+                            {{ member.relation }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <p class="text-gray-600">
+                    {{ member.name }} is {{ member.relation.toLowerCase() }} of the family.
+                    Age: {{ member.age }}.
+                </p>
+
+                <!-- Salary -->
+                <div class="mt-4">
+                    <p class="text-sm text-gray-500">
+                        Salary:
+                        <span class="font-semibold text-gray-700">
+                            {{ member.salary > 0 ? ('$' + member.salary) : 'N/A' }}
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Icon -->
+                <div class="mt-6 flex justify-between items-center">
+                    <button (click)="editMember(member.id)"
+                        class="flex items-center bg-gray-200 text-gray-700 hover:bg-gray-300 text-sm font-semibold py-2 px-4 rounded-lg shadow-sm transition-colors duration-300">
+                        <span class="material-icons mr-1 text-base">edit</span>
+                        Edit
+                    </button>
+                    <span class="material-icons" [ngClass]="getColor(member.relation).split(' ')[0]">
+                        {{ getIcon(member.relation) }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

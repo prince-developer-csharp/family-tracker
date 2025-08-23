@@ -1,0 +1,25 @@
+<header class="bg-white shadow-md">
+    <div class="container mx-auto px-4">
+        <nav class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <a class="text-2xl font-bold text-blue-500 flex items-center" href="#">
+                    <span class="material-icons mr-2 text-3xl">groups</span>
+                    The Does
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-gray-600 hover:text-blue-500 transition-colors duration-300 font-semibold"
+                   [routerLink]="['/family-members']">Home</a>
+                <a class="text-gray-600 hover:text-blue-500 transition-colors duration-300 font-semibold"
+                    href="#">Gallery</a>
+                <a class="text-gray-600 hover:text-blue-500 transition-colors duration-300 font-semibold" href="#">Our
+                    Story</a>
+                <a class="text-gray-600 hover:text-blue-500 transition-colors duration-300 font-semibold"
+                    href="#">Contact</a>
+            </div>
+            <button class="md:hidden flex items-center">
+                <span class="material-icons text-gray-600">menu</span>
+            </button>
+        </nav>
+    </div>
+</header>
