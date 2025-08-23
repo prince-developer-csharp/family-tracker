@@ -3,6 +3,7 @@ import { Expense } from '../../../../shared/models/expense.model';
 import { ExpenseService } from '../../services/expense.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-expense-list',
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './expense-list.component.css',
 })
 export class ExpenseListComponent {
-   expenses: Expense[] = [];
+  expenses: Expense[] = [];
 
   constructor(private expenseService: ExpenseService, private router: Router) {}
 
@@ -20,16 +21,26 @@ export class ExpenseListComponent {
   }
 
   loadExpenses(): void {
-    this.expenses = this.expenseService.getAllExpenses();
-    console.log(this.expenses);
+    this.expenseService.getAllExpenses().subscribe({
+      next: (data) => (this.expenses = data),
+      error: (err) => console.error('Failed to fetch expenses:', err),
+    });
   }
 
-  deleteExpense(id: string | number): void {
-    if (confirm('Are you sure you want to delete this expense?')) {
-      this.expenseService.deleteExpense(id);
-      this.loadExpenses();
-    }
+deleteExpense(id: number): void {
+  if (confirm('Are you sure you want to delete this expense?')) {
+    this.expenseService.deleteExpense(id).subscribe({
+      next: () => {
+        this.loadExpenses();  // reload expenses after successful delete
+      },
+      error: (err) => {
+        console.error('Delete failed', err);
+        alert('Failed to delete the expense. Please try again.');
+      }
+    });
   }
+}
+
 
   addExpense(): void {
     this.router.navigate(['/expenses/add']);

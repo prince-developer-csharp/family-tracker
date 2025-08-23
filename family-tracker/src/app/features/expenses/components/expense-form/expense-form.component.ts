@@ -23,17 +23,31 @@ export class ExpenseFormComponent {
   ) {}
 
   ngOnInit(): void {
-    const expenseId = this.route.snapshot.paramMap.get('id');
-    const expense = expenseId ? this.service.getExpenseById(expenseId) : null;
-
-    this.editMode = !!expense;
-
     this.form = this.fb.group({
-      id: [expense?.id || '', Validators.required],
-      amount: [expense?.amount || '', [Validators.required, Validators.min(0)]],
-      category: [expense?.category || '', Validators.required],
-      description: [expense?.description || ''],
+      id: [null],
+      amount: ['', [Validators.required, Validators.min(0.01)]],
+      category: ['', Validators.required],
+      description: ['', Validators.required],
+      date: [null],
     });
+
+    const expenseId = this.route.snapshot.paramMap.get('id');
+
+    if (expenseId) {
+      this.editMode = true;
+
+      this.service.getExpenseById(+expenseId).subscribe({
+        next: (expense) => {
+          this.form.patchValue(expense);
+        },
+        error: (err) => {
+          console.error('Failed to load expense', err);
+          // optionally navigate away or show an error
+        },
+      });
+    } else {
+      this.editMode = false;
+    }
   }
 
   onSubmit(): void {
@@ -42,11 +56,15 @@ export class ExpenseFormComponent {
     const expense: Expense = this.form.value;
 
     if (this.editMode) {
-      this.service.updateExpense(expense);
+      this.service.updateExpense(expense).subscribe({
+        next: () => this.router.navigate(['/expenses']),
+        error: (err) => console.error('Update failed', err),
+      });
     } else {
-      this.service.addExpense(expense);
+      this.service.addExpense(expense).subscribe({
+        next: () => this.router.navigate(['/expenses']),
+        error: (err) => console.error('Add failed', err),
+      });
     }
-
-    this.router.navigate(['/expenses']);
   }
 }

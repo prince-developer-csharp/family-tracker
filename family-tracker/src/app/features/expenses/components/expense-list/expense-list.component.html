@@ -18,43 +18,68 @@
             <table class="flex-1 w-full">
               <thead>
                 <tr class="bg-slate-50">
-                  <th class="table-col-id px-4 py-3 text-left text-[#0d141c] w-[150px] text-sm font-medium leading-normal">
+                  <th
+                    class="table-col-id px-4 py-3 text-left text-[#0d141c] w-[150px] text-sm font-medium leading-normal">
                     ID
                   </th>
-                  <th class="table-col-amount px-4 py-3 text-left text-[#0d141c] w-[150px] text-sm font-medium leading-normal">
+                  <th
+                    class="table-col-amount px-4 py-3 text-left text-[#0d141c] w-[150px] text-sm font-medium leading-normal">
                     Amount
                   </th>
-                  <th class="table-col-category px-4 py-3 text-left text-[#0d141c] w-[200px] text-sm font-medium leading-normal">
+                  <th
+                    class="table-col-category px-4 py-3 text-left text-[#0d141c] w-[200px] text-sm font-medium leading-normal">
                     Category
                   </th>
-                  <th class="table-col-description px-4 py-3 text-left text-[#0d141c] w-[250px] text-sm font-medium leading-normal">
+                  <th
+                    class="table-col-description px-4 py-3 text-left text-[#0d141c] w-[250px] text-sm font-medium leading-normal">
                     Description
                   </th>
-                  <th class="table-col-actions px-4 py-3 text-left text-[#0d141c] w-60 text-sm font-medium leading-normal">
+                  <th
+                    class="table-col-description px-4 py-3 text-left text-[#0d141c] w-[250px] text-sm font-medium leading-normal">
+                    Date
+                  </th>
+                  <th
+                    class="table-col-description px-4 py-3 text-left text-[#0d141c] w-[250px] text-sm font-medium leading-normal">
+                    Time
+                  </th>
+                  <th
+                    class="table-col-actions px-4 py-3 text-left text-[#0d141c] w-60 text-sm font-medium leading-normal">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let expense of expenses" class="border-t border-t-[#cedbe8]">
-                  <td class="table-col-id h-[72px] px-4 py-2 w-[150px] text-[#49739c] text-sm font-normal leading-normal">
+                  <td
+                    class="table-col-id h-[72px] px-4 py-2 w-[150px] text-[#49739c] text-sm font-normal leading-normal">
                     {{ expense.id }}
                   </td>
-                  <td class="table-col-amount h-[72px] px-4 py-2 w-[150px] text-[#0d141c] text-sm font-normal leading-normal">
+                  <td
+                    class="table-col-amount h-[72px] px-4 py-2 w-[150px] text-[#0d141c] text-sm font-normal leading-normal">
                     {{ expense.amount | currency }}
                   </td>
-                  <td class="table-col-category h-[72px] px-4 py-2 w-[200px] text-[#0d141c] text-sm font-normal leading-normal">
+                  <td
+                    class="table-col-category h-[72px] px-4 py-2 w-[200px] text-[#0d141c] text-sm font-normal leading-normal">
                     {{ expense.category }}
                   </td>
-                  <td class="table-col-description h-[72px] px-4 py-2 w-[250px] text-[#0d141c] text-sm font-normal leading-normal truncate">
+                  <td
+                    class="table-col-description h-[72px] px-4 py-2 w-[250px] text-[#0d141c] text-sm font-normal leading-normal truncate">
                     {{ expense.description || '-' }}
+                  </td>
+                  <td
+                    class="table-col-description h-[72px] px-4 py-2 w-[250px] text-[#0d141c] text-sm font-normal leading-normal truncate">
+                    {{ expense.date | date:'fullDate' }}
+                  </td>
+                  <td
+                    class="table-col-description h-[72px] px-4 py-2 w-[250px] text-[#0d141c] text-sm font-normal leading-normal truncate">
+                    {{ expense.date | date:'shortTime' }}
                   </td>
                   <td
                     class="table-col-actions h-[72px] px-4 py-2 w-60 flex items-center space-x-4 text-sm font-medium leading-normal tracking-[0.015em]">
                     <!-- Edit Button -->
                     <button (click)="editExpense(expense.id)" class="text-blue-600 hover:underline flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5 mr-1">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M16.862 4.487a2.1 2.1 0 113.061 3.06L8.625 18.846 4.5 19.5l.654-4.125L16.862 4.487z" />
                       </svg>
@@ -84,6 +109,7 @@
             }
 
             @container(max-width: 240px) {
+
               .table-col-amount,
               .table-col-category {
                 display: none;
@@ -91,6 +117,7 @@
             }
 
             @container(max-width: 360px) {
+
               .table-col-description,
               .table-col-actions {
                 display: none;
